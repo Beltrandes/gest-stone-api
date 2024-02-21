@@ -24,9 +24,19 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable UUID id) {
         return ResponseEntity.ok(employeeService.getById(id));
     }
-
     @PostMapping
     public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.create(employeeDTO));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable UUID id, @RequestBody EmployeeDTO employeeDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(employeeService.update(id, employeeDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable UUID id) {
+        employeeService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
