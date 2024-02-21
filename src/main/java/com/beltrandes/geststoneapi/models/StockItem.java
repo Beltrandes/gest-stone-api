@@ -1,5 +1,6 @@
 package com.beltrandes.geststoneapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class StockItem {
     private String name;
     private String details;
     @ManyToOne
+    @JsonIgnore
     private Stock stock;
     private Integer quantity;
     private Integer minQuantity;

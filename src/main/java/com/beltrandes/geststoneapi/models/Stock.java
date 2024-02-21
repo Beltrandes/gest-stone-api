@@ -1,10 +1,8 @@
 package com.beltrandes.geststoneapi.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -24,10 +22,16 @@ public class Stock {
     private UUID id;
     private String name;
     @OneToMany(mappedBy = "stock")
+    @Setter(value = AccessLevel.NONE)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<StockItem> stockItems = new ArrayList<>();
     @OneToMany(mappedBy = "stock")
+    @Setter(value = AccessLevel.NONE)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<StockEntry> stockEntries = new ArrayList<>();
     @OneToMany(mappedBy = "stock")
+    @Setter(value = AccessLevel.NONE)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<StockOut> stockOuts = new ArrayList<>();
     @CreationTimestamp
     private LocalDateTime createdAt;

@@ -1,5 +1,6 @@
 package com.beltrandes.geststoneapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class StockOut {
     @ManyToOne
     private Employee employee;
     @ManyToOne
+    @JsonIgnore
     private Stock stock;
     @CreationTimestamp
     private LocalDateTime movementDate;
