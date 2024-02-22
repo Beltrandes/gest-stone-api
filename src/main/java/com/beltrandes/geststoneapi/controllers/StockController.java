@@ -17,25 +17,25 @@ public class StockController {
     private StockService stockService;
 
     @GetMapping
-    public ResponseEntity<List<StockDTO>> getEmployees() {
+    public ResponseEntity<List<StockDTO>> getAllStocks() {
         return ResponseEntity.ok(stockService.getAll());
     }
     @GetMapping("/{id}")
-    public ResponseEntity<StockDTO> getEmployee(@PathVariable @Validated UUID id) {
+    public ResponseEntity<StockDTO> getStock(@PathVariable @Validated UUID id) {
         return ResponseEntity.ok(stockService.getById(id));
     }
     @PostMapping
-    public ResponseEntity<StockDTO> createEmployee(@RequestBody @Validated StockDTO stockDTO) {
+    public ResponseEntity<StockDTO> createStock(@RequestBody @Validated StockDTO stockDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(stockService.create(stockDTO));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StockDTO> updateEmployee(@PathVariable @Validated UUID id, @RequestBody @Validated StockDTO stockDTO) {
+    public ResponseEntity<StockDTO> updateStock(@PathVariable @Validated UUID id, @RequestBody @Validated StockDTO stockDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(stockService.update(id, stockDTO));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable @Validated UUID id) {
+    public ResponseEntity<Void> deleteStock(@PathVariable @Validated UUID id) {
         stockService.delete(id);
         return ResponseEntity.noContent().build();
     }

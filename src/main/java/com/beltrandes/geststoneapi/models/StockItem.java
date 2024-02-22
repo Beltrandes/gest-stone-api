@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -17,6 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "stock_item")
 @EqualsAndHashCode(of = "id")
+
 public class StockItem {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -26,6 +29,10 @@ public class StockItem {
     @ManyToOne
     @JsonIgnore
     private Stock stock;
+    @OneToMany(mappedBy = "stockItem", cascade = CascadeType.ALL)
+    private List<StockEntry> stockEntries = new ArrayList<>();
+    @OneToMany(mappedBy = "stockItem", cascade = CascadeType.ALL)
+    private List<StockOut> stockOuts = new ArrayList<>();
     private Integer quantity;
     private Integer minQuantity;
     @CreationTimestamp

@@ -1,5 +1,6 @@
 package com.beltrandes.geststoneapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
@@ -21,17 +22,17 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
-    @OneToMany(mappedBy = "stock")
+    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
     @Setter(value = AccessLevel.NONE)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @JsonIgnore
     private List<StockItem> stockItems = new ArrayList<>();
-    @OneToMany(mappedBy = "stock")
+    @OneToMany(mappedBy = "stock" , cascade = CascadeType.ALL)
     @Setter(value = AccessLevel.NONE)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @JsonIgnore
     private List<StockEntry> stockEntries = new ArrayList<>();
-    @OneToMany(mappedBy = "stock")
+    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
     @Setter(value = AccessLevel.NONE)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @JsonIgnore
     private List<StockOut> stockOuts = new ArrayList<>();
     @CreationTimestamp
     private LocalDateTime createdAt;
