@@ -1,5 +1,6 @@
 package com.beltrandes.geststoneapi.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,8 +31,10 @@ public class StockItem {
     @JsonIgnore
     private Stock stock;
     @OneToMany(mappedBy = "stockItem", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<StockEntry> stockEntries = new ArrayList<>();
     @OneToMany(mappedBy = "stockItem", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<StockOut> stockOuts = new ArrayList<>();
     private Integer quantity;
     private Integer minQuantity;

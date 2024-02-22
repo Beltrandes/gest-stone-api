@@ -1,12 +1,12 @@
 package com.beltrandes.geststoneapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -22,6 +22,7 @@ public class StockEntry {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @ManyToOne
+    @JsonManagedReference
     private StockItem stockItem;
     @ManyToOne
     @JsonIgnore
@@ -37,5 +38,13 @@ public class StockEntry {
         this.stock = stock;
         this.previousQuantity = previousQuantity;
         this.addedQuantity = addedQuantity;
+    }
+
+    public void setPreviousQuantity() {
+        previousQuantity = stockItem.getQuantity();
+    }
+
+    public void setStock() {
+        stock = stockItem.getStock();
     }
 }
