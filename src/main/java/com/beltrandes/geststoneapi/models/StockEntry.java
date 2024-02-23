@@ -40,11 +40,4 @@ public class StockEntry {
         this.addedQuantity = addedQuantity;
     }
 
-    public void setPreviousQuantity() {
-        previousQuantity = stockItem.getQuantity();
-    }
-
-    public void setStock() {
-        stock = stockItem.getStock();
-    }
 }

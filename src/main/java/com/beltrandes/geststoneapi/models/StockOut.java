@@ -29,10 +29,10 @@ public class StockOut {
     @ManyToOne
     @JsonIgnore
     private Stock stock;
-    @CreationTimestamp
-    private LocalDateTime movementDate;
     private Integer previousQuantity;
     private Integer withdrawnQuantity;
+    @CreationTimestamp
+    private LocalDateTime movementDate;
 
 
     public StockOut(StockItem stockItem, Employee employee, Stock stock, LocalDateTime movementDate, Integer previousQuantity, Integer withdrawnQuantity) {

@@ -49,4 +49,20 @@ public class StockItemService {
         var entity = stockItemRepository.findById(id).orElseThrow();
         stockItemRepository.delete(entity);
     }
+
+    public void addStockItemQuantity(StockItem stockItem, int quantity) {
+        if (stockItem != null) {
+            stockItem.setQuantity(stockItem.getQuantity() + quantity);
+            stockItemRepository.save(stockItem);
+        }
+    }
+
+    public void withdrawStockItemQuantity(StockItem stockItem, int quantity) {
+        if (stockItem != null) {
+            if (stockItem.getQuantity() >= quantity) {
+                stockItem.setQuantity(stockItem.getQuantity() - quantity);
+                stockItemRepository.save(stockItem);
+            }
+        }
+    }
 }
