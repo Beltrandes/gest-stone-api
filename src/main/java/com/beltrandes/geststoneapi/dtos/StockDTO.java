@@ -16,9 +16,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class StockDTO {
-    private UUID id;
-    private String name;
-    private List<StockItem> stockItems;
-    private List<StockEntry> stockEntries;
-    private List<StockOut> stockOuts;
+    UUID id;
+    String name;
+    List<StockItem> stockItems;
+    List<StockEntry> stockEntries;
+    List<StockOut> stockOuts;
 }

@@ -1,6 +1,7 @@
 package com.beltrandes.geststoneapi.configurations;
 
 import com.beltrandes.geststoneapi.enums.EmployeeRole;
+import com.beltrandes.geststoneapi.enums.MaterialType;
 import com.beltrandes.geststoneapi.models.*;
 import com.beltrandes.geststoneapi.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,25 +9,29 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @Component
 public class DataLoader implements CommandLineRunner {
 
     @Autowired
     private StockRepository stockRepository;
-
     @Autowired
     private StockItemRepository stockItemRepository;
-
     @Autowired
     private EmployeeRepository employeeRepository;
-
     @Autowired
     private StockEntryRepository stockEntryRepository;
-
     @Autowired
     private StockOutRepository stockOutRepository;
-
+    @Autowired
+    private MaterialRepository materialRepository;
+    @Autowired
+    private ClientRepository clientRepository;
+    @Autowired
+    private QuotationRepository quotationRepository;
+    @Autowired
+    private  QuoteItemRepository quoteItemRepository;
     @Override
     public void run(String... args) throws Exception {
         stockEntryRepository.deleteAll();
@@ -34,6 +39,13 @@ public class DataLoader implements CommandLineRunner {
         stockItemRepository.deleteAll();
         stockRepository.deleteAll();
         employeeRepository.deleteAll();
+        quoteItemRepository.deleteAll();
+        quotationRepository.deleteAll();
+        materialRepository.deleteAll();
+        clientRepository.deleteAll();
+
+
+
         // Estoques
         Stock stock1 = new Stock("Produção");
         stockRepository.save(stock1);
@@ -77,7 +89,39 @@ public class DataLoader implements CommandLineRunner {
         StockOut stockOut1 = new StockOut(item1, employee1, stock1, null, item1.getQuantity(), 5);
         stockOutRepository.save(stockOut1);
 
+        // Materials
+
+        var material1 = new Material(null, "Preto São Gabriel", 980.00, "Preto", false, true, MaterialType.GRANITE);
+        var material2 = new Material(null, "Branco Prime", 1200.00, "Branco", false, false, MaterialType.SILESTONE);
+        var material3= new Material(null, "Branco Itaúnas", 850.00, "Branco/Cinza", false, true, MaterialType.MARBLE);
+        materialRepository.saveAll(Arrays.asList(material1, material2, material3));
+
+        // Clients
+        var client1 = new Client("Lilia Cunha", "11923042134", "liliacunha@gmail.com", "Av. Paulista, 10325");
+        var client2 = new Client("André Marques", "11929164283", "andrevertente@gmail.com", "Av. Macuco, 1033");
+        var client3 = new Client("Amanda Neves", "11921235623", "amandaarquiteta@gmail.com", "R. Nações Unidas, 325");
+        clientRepository.saveAll(Arrays.asList(client1, client2, client3));
+
+        var quotation1 = new Quotation(client1, 20, LocalDateTime.now());
+        quotationRepository.save(quotation1);
+
+        var quoteItem1 = new QuoteItem("Bancada", quotation1, material2, 1.20, 0.45, 2);
+        quoteItem1.calculateAll();
+        quoteItemRepository.save(quoteItem1);
+        var quoteItem2 = new QuoteItem("Lavatório", quotation1, material1, 1.86, 0.50, 1);
+        quoteItem2.calculateAll();
+        quoteItemRepository.save(quoteItem2);
+
+        quotation1.calculateTotalM2();
+        quotation1.calculateTotalPrice();
+        quotationRepository.save(quotation1);
+
+
     }
+
+
+
+
 
 }
 
