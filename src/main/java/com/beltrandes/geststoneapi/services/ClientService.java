@@ -31,4 +31,19 @@ public class ClientService {
         clientRepository.save(entity);
         return modelMapper.map(entity, ClientDTO.class);
     }
+
+    public ClientDTO update(UUID id, ClientDTO clientDTO) {
+        var entity = clientRepository.findById(id).orElseThrow();
+        entity.setName(clientDTO.getName());
+        entity.setPhoneNumber(clientDTO.getPhoneNumber());
+        entity.setAddress(clientDTO.getAddress());
+        entity.setEmail(clientDTO.getEmail());
+        clientRepository.save(entity);
+        return modelMapper.map(entity, ClientDTO.class);
+    }
+
+    public void delete(UUID id) {
+        var entity = clientRepository.findById(id).orElseThrow();
+        clientRepository.delete(entity);
+    }
 }

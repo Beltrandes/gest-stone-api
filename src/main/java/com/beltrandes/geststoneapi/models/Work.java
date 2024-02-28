@@ -1,6 +1,7 @@
 package com.beltrandes.geststoneapi.models;
 
 import com.beltrandes.geststoneapi.enums.WorkStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class Work {
     private UUID id;
     private String name;
     @ManyToOne
+    @JsonIgnore
     private Client client;
     private String address;
     private WorkStatus status;

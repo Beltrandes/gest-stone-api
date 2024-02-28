@@ -1,5 +1,6 @@
 package com.beltrandes.geststoneapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,8 +27,10 @@ public class Client {
     private String email;
     private String address;
     @OneToMany(mappedBy = "client")
+    @JsonIgnore
     private List<Quotation> quotations = new ArrayList<>();
     @OneToMany(mappedBy = "client")
+    @JsonIgnore
     private List<Work> works = new ArrayList<>();
     @CreationTimestamp
     private LocalDateTime createdAt;

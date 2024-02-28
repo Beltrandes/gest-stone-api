@@ -1,5 +1,6 @@
 package com.beltrandes.geststoneapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,9 +22,13 @@ public class Quotation {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    private String name;
+    private String details;
     @ManyToOne
+    @JsonIgnore
     private Client client;
     @OneToMany(mappedBy = "quotation")
+    @JsonIgnore
     private List<QuoteItem> quoteItems = new ArrayList<>();
     private Double totalPrice;
     private Double totalM2;
@@ -33,6 +38,14 @@ public class Quotation {
     private LocalDateTime createdAt;
 
     public Quotation(Client client, Integer deadlineDays, LocalDateTime expiration) {
+        this.client = client;
+        this.deadlineDays = deadlineDays;
+        this.expiration = expiration;
+    }
+
+    public Quotation(String name, String details, Client client, Integer deadlineDays, LocalDateTime expiration) {
+        this.name = name;
+        this.details = details;
         this.client = client;
         this.deadlineDays = deadlineDays;
         this.expiration = expiration;

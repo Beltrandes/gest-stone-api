@@ -31,7 +31,8 @@ public class DataLoader implements CommandLineRunner {
     @Autowired
     private QuotationRepository quotationRepository;
     @Autowired
-    private  QuoteItemRepository quoteItemRepository;
+    private QuoteItemRepository quoteItemRepository;
+
     @Override
     public void run(String... args) throws Exception {
         stockEntryRepository.deleteAll();
@@ -43,7 +44,6 @@ public class DataLoader implements CommandLineRunner {
         quotationRepository.deleteAll();
         materialRepository.deleteAll();
         clientRepository.deleteAll();
-
 
 
         // Estoques
@@ -91,9 +91,9 @@ public class DataLoader implements CommandLineRunner {
 
         // Materials
 
-        var material1 = new Material(null, "Preto São Gabriel", 980.00, "Preto", false, true, MaterialType.GRANITE);
-        var material2 = new Material(null, "Branco Prime", 1200.00, "Branco", false, false, MaterialType.SILESTONE);
-        var material3= new Material(null, "Branco Itaúnas", 850.00, "Branco/Cinza", false, true, MaterialType.MARBLE);
+        var material1 = new Material("Preto São Gabriel", 980.00, "Preto", "", false, true, true, MaterialType.GRANITE);
+        var material2 = new Material("Branco Prime", 1200.00, "Branco", " ", false, false, false, MaterialType.SILESTONE);
+        var material3 = new Material("Branco Itaúnas", 850.00, "Branco", "Cinza", false, true, true, MaterialType.MARBLE);
         materialRepository.saveAll(Arrays.asList(material1, material2, material3));
 
         // Clients
@@ -102,15 +102,18 @@ public class DataLoader implements CommandLineRunner {
         var client3 = new Client("Amanda Neves", "11921235623", "amandaarquiteta@gmail.com", "R. Nações Unidas, 325");
         clientRepository.saveAll(Arrays.asList(client1, client2, client3));
 
-        var quotation1 = new Quotation(client1, 20, LocalDateTime.now());
+        var quotation1 = new Quotation("Apartamento Dna. Irina", "", client1, 20, LocalDateTime.now());
         quotationRepository.save(quotation1);
 
-        var quoteItem1 = new QuoteItem("Bancada", quotation1, material2, 1.20, 0.45, 2);
+        var quoteItem1 = new QuoteItem("Bancada", "Frontão 10cm / Saia 5cm / Reengrosso / 45º ", quotation1, material2, 1.20, 0.45, 2);
         quoteItem1.calculateAll();
         quoteItemRepository.save(quoteItem1);
-        var quoteItem2 = new QuoteItem("Lavatório", quotation1, material1, 1.86, 0.50, 1);
+        var quoteItem2 = new QuoteItem("Lavatório", "Cuba esculpida / Frontão 10cm / Saia cuba 20cm / Saia 5cm", quotation1, material1, 1.86, 0.50, 1);
         quoteItem2.calculateAll();
         quoteItemRepository.save(quoteItem2);
+
+        quotation1.getQuoteItems().add(quoteItem1);
+        quotation1.getQuoteItems().add(quoteItem2);
 
         quotation1.calculateTotalM2();
         quotation1.calculateTotalPrice();
@@ -118,9 +121,6 @@ public class DataLoader implements CommandLineRunner {
 
 
     }
-
-
-
 
 
 }
