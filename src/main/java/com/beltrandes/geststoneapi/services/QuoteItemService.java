@@ -3,10 +3,10 @@ package com.beltrandes.geststoneapi.services;
 import com.beltrandes.geststoneapi.dtos.CreateQuoteItemDTO;
 import com.beltrandes.geststoneapi.dtos.QuoteItemDTO;
 import com.beltrandes.geststoneapi.enums.MaterialType;
-import com.beltrandes.geststoneapi.models.Material;
-import com.beltrandes.geststoneapi.models.Quotation;
-import com.beltrandes.geststoneapi.models.QuoteItem;
+import com.beltrandes.geststoneapi.models.*;
+import com.beltrandes.geststoneapi.repositories.MaterialRepository;
 import com.beltrandes.geststoneapi.repositories.QuoteItemRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,34 +20,32 @@ public class QuoteItemService {
     @Autowired
     private QuoteItemRepository quoteItemRepository;
     @Autowired
-            private QuotationService quotationService;
+    private QuotationService quotationService;
     @Autowired
-            private MaterialService materialService;
+    private MaterialRepository materialRepository;
 
     ModelMapper modelMapper = new ModelMapper();
-
     @Transactional
-    public QuoteItemDTO create(CreateQuoteItemDTO createQuoteItemDTO) {
-        Quotation quotation = modelMapper.map(quotationService.getById(createQuoteItemDTO.quotationId()), Quotation.class);
-        Material material = modelMapper.map(materialService.getById(createQuoteItemDTO.materialId()), Material.class) ;
-        if (material == null) {
-            throw new IllegalArgumentException("Material does not exist");
+    public void create(CreateQuoteItemDTO createQuoteItemDTO) {
+        var quotation = modelMapper.map(quotationService.getById(createQuoteItemDTO.quotationId()), Quotation.class);
+        var material = materialRepository.findById(createQuoteItemDTO.materialId()).orElseThrow(() -> new EntityNotFoundException("Material not foud"));
+        if (quotation != null) {
+            var quoteItem = new QuoteItem();
+            quoteItem.setQuotation(quotation);
+            if (material != null) {
+                quoteItem.setMaterial(material);
+                quoteItem.setQuantity(createQuoteItemDTO.quantity());
+                quoteItem.setMeasureY(createQuoteItemDTO.measureY());
+                quoteItem.setMeasureX(createQuoteItemDTO.measureX());
+                quoteItem.setName(createQuoteItemDTO.name());
+                quoteItem.setDetails(createQuoteItemDTO.details());
+                quoteItem.calculateM2();
+                quoteItem.calculateTotalM2();
+                quoteItem.calculatePrice();
+                quoteItem.calculateTotalPrice();
+                quotationService.updateQuoteItems(createQuoteItemDTO.quotationId(), quoteItem);
+            }
         }
-
-        QuoteItem quoteItem = new QuoteItem(
-                createQuoteItemDTO.name(),
-                createQuoteItemDTO.details(),
-                quotation,
-                material,
-                createQuoteItemDTO.measureX(),
-                createQuoteItemDTO.measureY(),
-                createQuoteItemDTO.quantity()
-        );
-
-        quoteItem.calculateAll();
-        quoteItemRepository.save(quoteItem);
-
-        return modelMapper.map(quoteItem, QuoteItemDTO.class);
     }
 
 }

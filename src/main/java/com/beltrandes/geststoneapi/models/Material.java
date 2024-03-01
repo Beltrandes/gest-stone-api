@@ -4,10 +4,7 @@ import com.beltrandes.geststoneapi.enums.MaterialType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +13,6 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Transactional
 @EqualsAndHashCode(of = "id")
 public class Material {
     @Id
@@ -31,6 +27,8 @@ public class Material {
     private boolean hasCrystals;
     private MaterialType type;
     @OneToMany(mappedBy = "material")
+    @JsonIgnore
+    @Setter(AccessLevel.NONE)
     private List<QuoteItem> items = new ArrayList<>();
 
 

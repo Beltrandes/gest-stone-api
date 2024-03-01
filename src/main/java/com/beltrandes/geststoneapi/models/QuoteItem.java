@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Table(name = "quote_item")
 public class QuoteItem {
     @Id
@@ -20,8 +22,9 @@ public class QuoteItem {
     private String name;
     private String details;
     @ManyToOne
+    @JsonIgnore
     private Quotation quotation;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JsonIgnore
     private Material material;
     private Double measureX;

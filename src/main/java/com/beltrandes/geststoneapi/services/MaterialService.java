@@ -1,6 +1,7 @@
 package com.beltrandes.geststoneapi.services;
 
 import com.beltrandes.geststoneapi.dtos.MaterialDTO;
+import com.beltrandes.geststoneapi.models.Material;
 import com.beltrandes.geststoneapi.repositories.MaterialRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,11 @@ public class MaterialService {
     }
     public MaterialDTO getById(UUID id) {
         return modelMapper.map(materialRepository.findById(id).orElseThrow(), MaterialDTO.class);
+    }
+
+    public MaterialDTO create(MaterialDTO materialDTO) {
+        var entity = modelMapper.map(materialDTO, Material.class);
+        materialRepository.save(entity);
+        return modelMapper.map(entity, MaterialDTO.class);
     }
 }

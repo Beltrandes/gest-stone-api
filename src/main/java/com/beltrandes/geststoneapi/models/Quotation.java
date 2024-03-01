@@ -2,10 +2,7 @@ package com.beltrandes.geststoneapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -28,6 +25,7 @@ public class Quotation {
     @JsonIgnore
     private Client client;
     @OneToMany(mappedBy = "quotation")
+    @Setter(value = AccessLevel.NONE)
     @JsonIgnore
     private List<QuoteItem> quoteItems = new ArrayList<>();
     private Double totalPrice;

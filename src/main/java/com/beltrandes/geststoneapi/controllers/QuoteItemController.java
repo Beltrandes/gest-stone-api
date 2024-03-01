@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class QuoteItemController {
     @Autowired
     private QuoteItemService quoteItemService;
-    @PostMapping("/create")
-    @Transactional
-    public ResponseEntity<QuoteItemDTO> create(@RequestBody CreateQuoteItemDTO createQuoteItemDTO) {
-        return ResponseEntity.ok().body(quoteItemService.create(createQuoteItemDTO));
+    @PostMapping
+    public ResponseEntity<String> create(@RequestBody CreateQuoteItemDTO createQuoteItemDTO) {
+        quoteItemService.create(createQuoteItemDTO);
+        return ResponseEntity.ok().body("Item de orçamento criado com sucesso!");
     }
 }
