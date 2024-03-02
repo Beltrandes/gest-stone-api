@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +18,8 @@ public class MaterialDTO {
     UUID id;
     String name;
     Double price;
+    Double lastPrice;
+    LocalDateTime lastUpdatePrice;
     String primaryColor;
     String secondaryColor;
     boolean isMottled;

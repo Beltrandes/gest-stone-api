@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +21,8 @@ public class Material {
     private UUID id;
     private String name;
     private Double price;
+    private Double lastPrice;
+    private LocalDateTime lastPriceUpdate;
     private String primaryColor;
     private String secondaryColor;
     private boolean isMottled;
