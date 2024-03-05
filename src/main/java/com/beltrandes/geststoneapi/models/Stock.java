@@ -23,15 +23,12 @@ public class Stock {
     private UUID id;
     private String name;
     @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
-    @Setter(value = AccessLevel.NONE)
     @JsonIgnore
     private List<StockItem> stockItems = new ArrayList<>();
     @OneToMany(mappedBy = "stock" , cascade = CascadeType.ALL)
-    @Setter(value = AccessLevel.NONE)
     @JsonIgnore
     private List<StockEntry> stockEntries = new ArrayList<>();
     @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
-    @Setter(value = AccessLevel.NONE)
     @JsonIgnore
     private List<StockOut> stockOuts = new ArrayList<>();
     @CreationTimestamp

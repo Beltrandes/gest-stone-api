@@ -18,7 +18,7 @@ import java.util.UUID;
 public class StockDTO {
     UUID id;
     String name;
-    List<StockItem> stockItems;
-    List<StockEntry> stockEntries;
-    List<StockOut> stockOuts;
+    List<StockItemDTO> stockItems;
+    List<StockEntryDTO> stockEntries;
+    List<StockOutDTO> stockOuts;
 }

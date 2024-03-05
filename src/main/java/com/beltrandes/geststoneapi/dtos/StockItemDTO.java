@@ -19,9 +19,7 @@ public class StockItemDTO {
     UUID id;
     String name;
     String details;
-    Stock stock;
-    List<StockEntry> stockEntries;
-    List<StockOut> stockOuts;
+    StockDTO stock;
     Integer quantity;
     Integer minQuantity;
 }
