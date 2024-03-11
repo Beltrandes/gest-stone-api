@@ -1,7 +1,10 @@
 package com.beltrandes.geststoneapi.models;
 
+import com.beltrandes.geststoneapi.dtos.StockOutDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +23,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "stock_item")
 @EqualsAndHashCode(of = "id")
-
 public class StockItem {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -28,7 +30,7 @@ public class StockItem {
     private String name;
     private String details;
     @ManyToOne
-    @JsonIgnore
+    @JsonBackReference(value = "stockItems")
     private Stock stock;
     private Integer quantity;
     private Integer minQuantity;

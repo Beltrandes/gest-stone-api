@@ -1,6 +1,9 @@
 package com.beltrandes.geststoneapi.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +30,7 @@ public class StockOut {
     @ManyToOne
     private Employee employee;
     @ManyToOne
-    @JsonIgnore
+    @JsonBackReference(value = "stockOuts")
     private Stock stock;
     private Integer previousQuantity;
     private Integer withdrawnQuantity;

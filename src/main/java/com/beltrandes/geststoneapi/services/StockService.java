@@ -1,12 +1,16 @@
 package com.beltrandes.geststoneapi.services;
 
 import com.beltrandes.geststoneapi.dtos.StockDTO;
+import com.beltrandes.geststoneapi.dtos.StockItemDTO;
 import com.beltrandes.geststoneapi.models.Stock;
+import com.beltrandes.geststoneapi.models.StockItem;
+import com.beltrandes.geststoneapi.repositories.StockItemRepository;
 import com.beltrandes.geststoneapi.repositories.StockRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,6 +18,8 @@ import java.util.UUID;
 public class StockService {
     @Autowired
     private StockRepository stockRepository;
+    @Autowired
+    private StockItemService stockItemService;
     ModelMapper modelMapper = new ModelMapper();
 
     public List<StockDTO> getAll() {

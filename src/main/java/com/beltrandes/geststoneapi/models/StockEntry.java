@@ -1,6 +1,8 @@
 package com.beltrandes.geststoneapi.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,10 +24,9 @@ public class StockEntry {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @ManyToOne
-    @JsonManagedReference
     private StockItem stockItem;
     @ManyToOne
-    @JsonIgnore
+    @JsonBackReference(value = "stockEntries")
     private Stock stock;
     @CreationTimestamp
     private LocalDateTime movementDate;
