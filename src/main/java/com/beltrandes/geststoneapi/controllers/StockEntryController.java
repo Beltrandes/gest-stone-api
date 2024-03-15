@@ -22,8 +22,8 @@ public class StockEntryController {
         return ResponseEntity.ok().body(stockEntryService.getAll());
     }
     @PostMapping
-    public ResponseEntity<String> createStockEntry(@RequestBody AddStockItemQuantityDTO addStockItemQuantityDTO) {
+    public ResponseEntity createStockEntry(@RequestBody AddStockItemQuantityDTO addStockItemQuantityDTO) {
         stockEntryService.create(addStockItemQuantityDTO);
-        return ResponseEntity.status(HttpStatus.OK).body("Quantidade adicionada com sucesso, movimento de entrada no estoque criado.");
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

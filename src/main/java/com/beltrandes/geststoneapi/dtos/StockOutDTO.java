@@ -21,7 +21,7 @@ public class StockOutDTO {
     UUID id;
     StockItemDTO stockItem;
     EmployeeDTO employee;
-    @JsonBackReference(value = "stockOuts")
+    @JsonManagedReference(value = "stockOuts")
     StockDTO stock;
     Integer previousQuantity;
     Integer withdrawnQuantity;

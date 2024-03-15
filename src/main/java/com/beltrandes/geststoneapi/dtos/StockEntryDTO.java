@@ -22,8 +22,9 @@ import java.util.UUID;
 public class StockEntryDTO {
     UUID id;
     StockItemDTO stockItem;
-    @JsonBackReference(value = "stockEntries")
+    @JsonManagedReference(value = "stockEntries")
     StockDTO stock;
     Integer previousQuantity;
     Integer addedQuantity;
+    LocalDateTime movementDate;
 }

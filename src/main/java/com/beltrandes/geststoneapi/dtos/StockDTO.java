@@ -3,6 +3,7 @@ package com.beltrandes.geststoneapi.dtos;
 import com.beltrandes.geststoneapi.models.StockEntry;
 import com.beltrandes.geststoneapi.models.StockItem;
 import com.beltrandes.geststoneapi.models.StockOut;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,8 +25,8 @@ public class StockDTO {
     @Cascade(value = CascadeType.PERSIST)
     @JsonManagedReference(value = "stockItems")
     List<StockItemDTO> stockItems;
-    @JsonManagedReference(value = "stockEntries")
+    @JsonBackReference(value = "stockEntries")
     List<StockEntryDTO> stockEntries;
-    @JsonManagedReference(value = "stockOuts")
+    @JsonBackReference(value = "stockOuts")
     List<StockOutDTO> stockOuts;
 }
