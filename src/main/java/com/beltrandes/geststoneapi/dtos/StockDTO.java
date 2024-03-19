@@ -25,8 +25,8 @@ public class StockDTO {
     @Cascade(value = CascadeType.PERSIST)
     @JsonManagedReference(value = "stockItems")
     List<StockItemDTO> stockItems;
-    @JsonBackReference(value = "stockEntries")
+    @JsonManagedReference(value = "stockEntries")
     List<StockEntryDTO> stockEntries;
-    @JsonBackReference(value = "stockOuts")
+    @JsonManagedReference(value = "stockOuts")
     List<StockOutDTO> stockOuts;
 }

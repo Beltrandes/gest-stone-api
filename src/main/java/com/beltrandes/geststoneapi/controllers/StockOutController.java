@@ -4,6 +4,7 @@ import com.beltrandes.geststoneapi.dtos.StockOutDTO;
 import com.beltrandes.geststoneapi.dtos.WithdrawStockItemQuantityDTO;
 import com.beltrandes.geststoneapi.services.StockOutService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,8 @@ public class StockOutController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createStockOut(@RequestBody WithdrawStockItemQuantityDTO withdrawStockItemQuantityDTO) {
+    public ResponseEntity<Void> createStockOut(@RequestBody WithdrawStockItemQuantityDTO withdrawStockItemQuantityDTO) {
         stockOutService.create(withdrawStockItemQuantityDTO);
-        return ResponseEntity.ok().body("Quantidade removida com sucesso, movimento de saída no estoque criado");
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
